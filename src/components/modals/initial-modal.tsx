@@ -14,6 +14,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { FileUpload } from '@/components/file-upload'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -25,6 +28,8 @@ const formSchema = z.object({
 })
 
 export const InitialModal = () => {
+  const router = useRouter()
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -35,8 +40,17 @@ export const InitialModal = () => {
 
   const isLoading = form.formState.isSubmitting
 
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log(data)
+  const handleSubmit = async (data: z.infer<typeof formSchema>) => {
+    try {
+      await axios.post('/api/servers', data)
+
+      form.reset()
+
+      router.refresh()
+      window.location.reload()
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
@@ -49,9 +63,23 @@ export const InitialModal = () => {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
             <div className="space-y-8 px-6">
-              <div className="flex items-start justify-center text-center">TODO: Image Upload</div>
+              <div className="flex items-start justify-center text-center">
+                <FormField
+                  control={form.control}
+                  name="imageUrl"
+                  render={({ field }) => {
+                    return (
+                      <FormItem>
+                        <FormControl>
+                          <FileUpload onChangeAction={field.onChange} endpoint="serverImage" {...field} />
+                        </FormControl>
+                      </FormItem>
+                    )
+                  }}
+                />
+              </div>
               <FormField
                 control={form.control}
                 name="name"
@@ -76,7 +104,7 @@ export const InitialModal = () => {
               />
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
-              <Button variant="primary" disabled={isLoading}>
+              <Button type="submit" variant="primary" disabled={isLoading}>
                 Create
               </Button>
             </DialogFooter>

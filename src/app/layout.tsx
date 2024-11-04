@@ -26,29 +26,26 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider afterSignOutUrl={'/'}>
       <html lang="en" suppressHydrationWarning>
-      <body
-        // className={cn(geistSans.variable, geistMono.variable, `antialiased`)}
-        className={cn(font.className, 'bg-white dark:bg-[#313338]')}
-      >
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-        storageKey="ax-connect-theme"
-      >
-
-        {/*<SignedOut>*/}
-        {/*  <SignInButton />*/}
-        {/*</SignedOut>*/}
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
-        {children}
-      </ThemeProvider>
-      </body>
+        <body
+          // className={cn(geistSans.variable, geistMono.variable, `antialiased`)}
+          className={cn(font.className, 'bg-white dark:bg-[#313338]')}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+            storageKey="ax-connect-theme">
+            {/*<SignedOut>*/}
+            {/*  <SignInButton />*/}
+            {/*</SignedOut>*/}
+            {/*<SignedIn>*/}
+            {/*  <UserButton />*/}
+            {/*</SignedIn>*/}
+            {children}
+          </ThemeProvider>
+        </body>
       </html>
     </ClerkProvider>
   )

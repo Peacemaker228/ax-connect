@@ -9,6 +9,7 @@
     "lint": "next lint",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
+    "prisma:migrate:reset": "prisma migrate reset",
     "prisma:dbpush": "prisma db push",
     "prisma:studio": "prisma studio"
   },
@@ -38,7 +39,8 @@
     "tailwindcss-animate": "^1.0.7",
     "uploadthing": "^7.2.0",
     "uuid": "^11.0.2",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@types/node": "^20",

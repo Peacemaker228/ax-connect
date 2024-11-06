@@ -1,5 +1,4 @@
-
-import {db} from '@/lib/db'
+import { db } from '@/lib/db'
 import { currentUser } from '@clerk/nextjs/server'
 
 export const initialProfile = async () => {
@@ -7,22 +6,20 @@ export const initialProfile = async () => {
 
   const profile = await db.profile.findUnique({
     where: {
-      userId: user?.id
-    }
+      userId: user?.id,
+    },
   })
 
   if (profile) {
     return profile
   }
 
-  const newProfile = await db.profile.create({
+  return db.profile.create({
     data: {
       userId: user!.id,
       name: `${user?.firstName ?? 'Имя'} ${user?.lastName ?? 'Фамилия'}`,
       imageUrl: user?.imageUrl ?? '',
-      email: user?.emailAddresses[0].emailAddress ?? ''
-    }
+      email: user?.emailAddresses[0].emailAddress ?? '',
+    },
   })
-
-  return newProfile
 }

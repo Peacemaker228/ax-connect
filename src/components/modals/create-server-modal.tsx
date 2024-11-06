@@ -5,10 +5,11 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import { useModal } from '@/hooks/use-modal-store'
 import { formSchema } from '@/models/serverModalSchema'
 import { ServerModal } from '@/components/modals/server-modal'
 
-export const InitialModal = () => {
+export const CreateServerModal = () => {
   const router = useRouter()
 
   const form = useForm({
@@ -19,6 +20,10 @@ export const InitialModal = () => {
     },
   })
 
+  const { isOpen, onClose, type } = useModal()
+
+  const isModalOpen = isOpen && type === 'createServer'
+
   const isLoading = form.formState.isSubmitting
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
@@ -26,13 +31,25 @@ export const InitialModal = () => {
       await axios.post('/api/servers', data)
 
       form.reset()
-
+      onClose()
       router.refresh()
-      window.location.reload()
     } catch (err) {
       console.log(err)
     }
   }
 
-  return <ServerModal form={form} onSubmitAction={handleSubmit} isLoading={isLoading} />
+  const handleClose = () => {
+    form.reset()
+    onClose()
+  }
+
+  return (
+    <ServerModal
+      form={form}
+      onSubmitAction={handleSubmit}
+      isLoading={isLoading}
+      isModalOpen={isModalOpen}
+      onClose={handleClose}
+    />
+  )
 }

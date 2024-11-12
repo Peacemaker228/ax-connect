@@ -1,7 +1,14 @@
 import { create } from 'zustand'
 import { Server } from '@prisma/client'
 
-export type TModalType = 'createServer' | 'invite'
+export type TModalType =
+  | 'createServer'
+  | 'invite'
+  | 'editServer'
+  | 'members'
+  | 'createChannel'
+  | 'leaveServer'
+  | 'deleteServer'
 
 interface IModalData {
   server?: Server

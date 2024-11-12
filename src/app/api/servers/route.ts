@@ -3,6 +3,7 @@ import { currentsProfile } from '@/lib/currents-profile'
 import { v4 as uuidV4 } from 'uuid'
 import { db } from '@/lib/db'
 import { MemberRole } from '@prisma/client'
+import { EGeneral } from '../../../../types'
 
 export const POST = async (req: Request) => {
   try {
@@ -23,7 +24,7 @@ export const POST = async (req: Request) => {
         channels: {
           create: [
             {
-              name: 'general',
+              name: EGeneral.GENERAL,
               profileId: profile.id,
               type: 'TEXT',
             },

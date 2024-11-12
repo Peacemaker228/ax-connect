@@ -15,13 +15,13 @@ import { Button } from '@/components/ui/button'
 import { FC } from 'react'
 import { UseFormReturn } from 'react-hook-form'
 import { z } from 'zod'
-import { formSchema } from '@/models/serverModalSchema'
+import { serverFormSchema } from '@/models/serverModalSchema'
 
 interface IServerModalProps {
   isModalOpen?: boolean
   isLoading?: boolean
   onClose?: () => void
-  onSubmitAction: (data: z.infer<typeof formSchema>) => Promise<void>
+  onSubmitAction: (data: z.infer<typeof serverFormSchema>) => Promise<void>
   form: UseFormReturn<{ name: string; imageUrl: string }>
 }
 

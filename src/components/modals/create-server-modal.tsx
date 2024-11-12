@@ -6,14 +6,14 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useModal } from '@/hooks/use-modal-store'
-import { formSchema } from '@/models/serverModalSchema'
+import { serverFormSchema } from '@/models/serverModalSchema'
 import { ServerModal } from '@/components/modals/server-modal'
 
 export const CreateServerModal = () => {
   const router = useRouter()
 
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(serverFormSchema),
     defaultValues: {
       name: '',
       imageUrl: '',
@@ -26,7 +26,7 @@ export const CreateServerModal = () => {
 
   const isLoading = form.formState.isSubmitting
 
-  const handleSubmit = async (data: z.infer<typeof formSchema>) => {
+  const handleSubmit = async (data: z.infer<typeof serverFormSchema>) => {
     try {
       await axios.post('/api/servers', data)
 

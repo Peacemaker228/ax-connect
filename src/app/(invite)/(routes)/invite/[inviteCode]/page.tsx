@@ -35,7 +35,7 @@ const InvitePage: FC<IInvitePageProps> = async ({ params }) => {
   })
 
   if (existingServer) {
-    redirect(`${ERoutes}/${existingServer.id}`)
+    redirect(`${ERoutes.SERVERS}/${existingServer.id}`)
   }
 
   const server = await db.server.update({
@@ -52,7 +52,7 @@ const InvitePage: FC<IInvitePageProps> = async ({ params }) => {
   })
 
   if (server) {
-    redirect(`${ERoutes}/${server.id}`)
+    redirect(`${ERoutes.SERVERS}/${server.id}`)
   }
 
   return null

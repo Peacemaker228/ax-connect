@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { ChannelType, Server } from '@prisma/client'
+import { Channel, ChannelType, Server } from '@prisma/client'
 
 export type TModalType =
   | 'createServer'
@@ -9,10 +9,13 @@ export type TModalType =
   | 'createChannel'
   | 'leaveServer'
   | 'deleteServer'
+  | 'deleteChannel'
+  | 'editChannel'
 
 interface IModalData {
   server?: Server
   channelType?: ChannelType
+  channel?: Channel
 }
 
 interface IModalStore {

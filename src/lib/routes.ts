@@ -3,4 +3,6 @@ export enum ERoutes {
   SIGN_IN = '/sign-in',
   SIGN_UP = '/sign-up',
   SERVERS = '/servers',
+  CHANNELS = '/channels',
+  CONVERSATIONS = '/conversations',
 }

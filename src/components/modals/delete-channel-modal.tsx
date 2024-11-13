@@ -4,16 +4,18 @@ import axios from 'axios'
 import { useModal } from '@/hooks/use-modal-store'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import qs from 'query-string'
+import { ERoutes } from '@/lib/routes'
 import { DeleteModal } from '@/components/modals/common/delete-modal'
 
-export const DeleteServerModal = () => {
+export const DeleteChannelModal = () => {
   const { isOpen, onClose, type, data } = useModal()
-  const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
 
-  const isModalOpen = isOpen && type === 'deleteServer'
+  const isModalOpen = isOpen && type === 'deleteChannel'
 
-  const { server } = data
+  const { server, channel } = data
 
   const handleSubmit = async () => {
     if (!server) return
@@ -21,11 +23,19 @@ export const DeleteServerModal = () => {
     try {
       setIsLoading(true)
 
-      await axios.delete(`/api/servers/${server.id}`)
+      const url = qs.stringifyUrl({
+        url: `/api/channels/${channel?.id}`,
+        query: {
+          serverId: server.id,
+        },
+      })
+
+      await axios.delete(url)
 
       onClose()
+
+      router.push(`${ERoutes.SERVERS}/${server.id}`)
       router.refresh()
-      router.push('/')
     } catch (err) {
       console.log(err)
     } finally {
@@ -37,8 +47,8 @@ export const DeleteServerModal = () => {
     <DeleteModal
       onClose={onClose}
       onSubmit={handleSubmit}
-      name={server?.name}
-      type="server"
+      name={channel?.name}
+      type="channel"
       isOpen={isModalOpen}
       isLoading={isLoading}
     />

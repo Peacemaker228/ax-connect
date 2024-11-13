@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
-import { useParams, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useModal } from '@/hooks/use-modal-store'
 import { ChannelType } from '@prisma/client'
 import qs from 'query-string'
@@ -12,44 +12,41 @@ import { channelFormSchema } from '@/models/channelFormSchema'
 import { useEffect } from 'react'
 import { ChannelModal } from '@/components/modals/common/channel-modal'
 
-export const CreateChannelModal = () => {
+export const EditChannelModal = () => {
   const router = useRouter()
-  const params = useParams()
   const { isOpen, onClose, type, data } = useModal()
 
-  const { channelType } = data
+  const { channel, server } = data
 
   const form = useForm({
     resolver: zodResolver(channelFormSchema),
     defaultValues: {
       name: '',
-      type: channelType || ChannelType.TEXT,
+      type: channel?.type || ChannelType.TEXT,
     },
   })
 
-  const isModalOpen = isOpen && type === 'createChannel'
+  const isModalOpen = isOpen && type === 'editChannel'
 
   const isLoading = form.formState.isSubmitting
 
   useEffect(() => {
-    if (channelType) {
-      form.setValue('type', channelType, { shouldDirty: true })
-      return
+    if (channel) {
+      form.setValue('name', channel.name, { shouldDirty: true })
+      form.setValue('type', channel.type, { shouldDirty: true })
     }
-
-    form.setValue('type', ChannelType.TEXT, { shouldDirty: true })
-  }, [channelType, form])
+  }, [channel, form])
 
   const handleSubmit = async (data: z.infer<typeof channelFormSchema>) => {
     try {
       const url = qs.stringifyUrl({
-        url: '/api/channels',
+        url: `/api/channels/${channel?.id}`,
         query: {
-          serverId: params?.serverId,
+          serverId: server?.id,
         },
       })
 
-      await axios.post(url, data)
+      await axios.patch(url, data)
 
       form.reset()
       onClose()
@@ -71,7 +68,7 @@ export const CreateChannelModal = () => {
       form={form}
       onSubmit={handleSubmit}
       isLoading={isLoading}
-      type={'create'}
+      type={'edit'}
     />
   )
 }

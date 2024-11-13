@@ -7,7 +7,7 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useModal } from '@/hooks/use-modal-store'
 import { serverFormSchema } from '@/models/serverModalSchema'
-import { ServerModal } from '@/components/modals/server-modal'
+import { ServerModal } from '@/components/modals/common/server-modal'
 import { useCallback, useEffect } from 'react'
 
 export const EditServerModal = () => {

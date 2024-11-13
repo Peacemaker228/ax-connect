@@ -3,7 +3,7 @@ import { currentsProfile } from '@/lib/currents-profile'
 import { getServerId } from '@/app/api/utils'
 import { db } from '@/lib/db'
 import { MemberRole } from '@prisma/client'
-import { EGeneral } from '../../../../types'
+import { EGeneral } from '@/types'
 
 export const POST = async (req: Request) => {
   try {

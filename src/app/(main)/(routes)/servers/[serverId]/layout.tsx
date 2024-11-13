@@ -3,7 +3,7 @@ import { currentsProfile } from '@/lib/currents-profile'
 import { db } from '@/lib/db'
 import { redirect } from 'next/navigation'
 import { ERoutes } from '@/lib/routes'
-import { ServerSidebar } from '@/components/server/server-sidebar'
+import { ServerSidebar } from '@/components/server'
 
 interface IServerIdLayoutProps {
   params: { serverId: string }
@@ -14,7 +14,6 @@ const ServerIdLayout: FC<PropsWithChildren<IServerIdLayoutProps>> = async ({ chi
   const profile = await currentsProfile()
 
   if (!profile) {
-    // TODO: чекнуть и исправить если что
     return redirect(ERoutes.SIGN_IN)
   }
 

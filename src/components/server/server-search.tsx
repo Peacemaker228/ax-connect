@@ -11,10 +11,11 @@ import {
   CommandList,
 } from '@/components/ui/command'
 import { useParams, useRouter } from 'next/navigation'
+import { TSearchType } from '@/types'
 
 export interface IServerData {
   label: string
-  type: 'channel' | 'member'
+  type: TSearchType
   data:
     | {
         icon: ReactElement | null

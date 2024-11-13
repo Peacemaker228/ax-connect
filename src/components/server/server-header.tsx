@@ -1,6 +1,6 @@
 'use client'
 
-import { TServerMembersProfiles } from '../../../types'
+import { TServerMembersProfiles } from '@/types'
 import { FC } from 'react'
 import { MemberRole } from '@prisma/client'
 import {

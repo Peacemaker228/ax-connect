@@ -7,3 +7,5 @@ export type TServerMembersProfiles = Server & {
 export enum EGeneral {
   GENERAL = 'general',
 }
+
+export type TSearchType = 'member' | 'channel'

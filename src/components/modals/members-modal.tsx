@@ -3,7 +3,7 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { useModal } from '@/hooks/use-modal-store'
 import { Check, GavelIcon, Loader2, MoreVertical, Shield, ShieldAlert, ShieldCheck, ShieldQuestion } from 'lucide-react'
-import { TServerMembersProfiles } from '../../../types'
+import { TServerMembersProfiles } from '@/types'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { UserAvatar } from '@/components/user-avatar'
 import { MemberRole } from '@prisma/client'

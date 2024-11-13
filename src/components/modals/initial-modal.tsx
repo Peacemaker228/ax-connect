@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { serverFormSchema } from '@/models/serverModalSchema'
-import { ServerModal } from '@/components/modals/server-modal'
+import { ServerModal } from '@/components/modals/common/server-modal'
 
 export const InitialModal = () => {
   const router = useRouter()

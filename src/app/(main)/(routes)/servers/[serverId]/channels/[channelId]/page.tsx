@@ -3,7 +3,7 @@ import { currentsProfile } from '@/lib/currents-profile'
 import { ERoutes } from '@/lib/routes'
 import { redirect } from 'next/navigation'
 import { db } from '@/lib/db'
-import { ChatHeader } from '@/components/chat'
+import { ChatHeader, ChatInput } from '@/components/chat'
 
 interface IChannelIdPageProps {
   params: {
@@ -41,6 +41,16 @@ const ChannelIdPage: FC<IChannelIdPageProps> = async ({ params }) => {
   return (
     <div className="bg-white dark:bg-[#313338] flex flex-col h-full">
       <ChatHeader name={channel.name} serverId={channel.serverId} type={'channel'} />
+      <div className={'flex-1'}>Future M</div>
+      <ChatInput
+        apiUrl={'/api/socket/messages'}
+        type={'channel'}
+        query={{
+          channelId: channel.id,
+          serverId: channel.serverId,
+        }}
+        name={channel.name}
+      />
     </div>
   )
 }

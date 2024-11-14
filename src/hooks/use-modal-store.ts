@@ -11,11 +11,16 @@ export type TModalType =
   | 'deleteServer'
   | 'deleteChannel'
   | 'editChannel'
+  | 'messageFile'
 
 interface IModalData {
   server?: Server
   channelType?: ChannelType
   channel?: Channel
+  apiUrl?: string
+  // может быть любое значение
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  query?: Record<string, any>
 }
 
 interface IModalStore {

@@ -5,11 +5,13 @@ import { useForm } from 'react-hook-form'
 import { chatInputSchema, IChatInputSchema } from '@/models/chatInputSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
-import { Plus, Smile } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import qs from 'query-string'
 import axios from 'axios'
 import { useModal } from '@/hooks/use-modal-store'
+import { EmojiPickerCustom } from '@/components/emoji-picker-custom'
+import { useRouter } from 'next/navigation'
 
 interface IChatInputProps {
   apiUrl: string
@@ -22,6 +24,7 @@ interface IChatInputProps {
 
 export const ChatInput: FC<IChatInputProps> = ({ apiUrl, query, name, type }) => {
   const { onOpen } = useModal()
+  const router = useRouter()
 
   const form = useForm<IChatInputSchema>({
     resolver: zodResolver(chatInputSchema),
@@ -40,6 +43,9 @@ export const ChatInput: FC<IChatInputProps> = ({ apiUrl, query, name, type }) =>
       })
 
       await axios.post(url, data)
+
+      form.reset()
+      router.refresh()
     } catch (err) {
       console.log(err)
     }
@@ -74,7 +80,7 @@ export const ChatInput: FC<IChatInputProps> = ({ apiUrl, query, name, type }) =>
                     }
                   />
                   <div className="absolute top-7 right-8">
-                    <Smile />
+                    <EmojiPickerCustom onChangeAction={(e: string) => field.onChange(`${field.value}${e}`)} />
                   </div>
                 </div>
               </FormControl>

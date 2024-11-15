@@ -6,11 +6,12 @@ import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { UserButton } from '@clerk/nextjs'
+import { ERoutes } from '@/lib/routes'
 
 export const NavigationSidebar = async () => {
   const profile = await currentProfile()
 
-  if (!profile) return redirect('/')
+  if (!profile) return redirect(ERoutes.MAIN_PAGE)
 
   const servers = await db.server.findMany({
     where: {

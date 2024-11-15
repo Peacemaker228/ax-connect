@@ -44,10 +44,8 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
             {/*  <UserButton />*/}
             {/*</SignedIn>*/}
             <SocketProvider>
-              <QueryProvider>
-                <ModalProvider />
-                {children}
-              </QueryProvider>
+              <ModalProvider />
+              <QueryProvider>{children}</QueryProvider>
             </SocketProvider>
           </ThemeProvider>
         </body>

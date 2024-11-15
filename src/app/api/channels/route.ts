@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { currentsProfile } from '@/lib/currents-profile'
+import { currentProfile } from '@/lib/current-profile'
 import { getServerId } from '@/app/api/utils'
 import { db } from '@/lib/db'
 import { MemberRole } from '@prisma/client'
@@ -15,7 +15,7 @@ export const POST = async (req: Request) => {
       return new Response('Type is required', { status: 400 })
     }
 
-    const profile = await currentsProfile()
+    const profile = await currentProfile()
     if (!profile) {
       return new Response('Unauthorized', { status: 401 })
     }

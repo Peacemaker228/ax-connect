@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { currentsProfile } from '@/lib/currents-profile'
+import { currentProfile } from '@/lib/current-profile'
 import { redirect } from 'next/navigation'
 import { ERoutes } from '@/lib/routes'
 import { db } from '@/lib/db'
@@ -12,7 +12,7 @@ interface IInvitePageProps {
 
 const InvitePage: FC<IInvitePageProps> = async ({ params }) => {
   const { inviteCode } = await params
-  const profile = await currentsProfile()
+  const profile = await currentProfile()
 
   if (!profile) {
     // TODO: чекнуть и исправить если что

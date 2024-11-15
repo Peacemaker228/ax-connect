@@ -12,6 +12,7 @@ import axios from 'axios'
 import { useModal } from '@/hooks/use-modal-store'
 import { EmojiPickerCustom } from '@/components/emoji-picker-custom'
 import { useRouter } from 'next/navigation'
+import { TChannelConversation } from '@/types'
 
 interface IChatInputProps {
   apiUrl: string
@@ -19,7 +20,7 @@ interface IChatInputProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   query: Record<string, any>
   name: string
-  type: 'channel' | 'conversation'
+  type: TChannelConversation
 }
 
 export const ChatInput: FC<IChatInputProps> = ({ apiUrl, query, name, type }) => {

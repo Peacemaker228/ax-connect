@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server'
-import { currentsProfile } from '@/lib/currents-profile'
+import { currentProfile } from '@/lib/current-profile'
 import { db } from '@/lib/db'
 import { validateMemberId } from './utils'
 import { getServerId } from '@/app/api/utils'
 
 export const deleteMember = async (req: Request, params: { memberId: string }) => {
   try {
-    const profile = await currentsProfile()
+    const profile = await currentProfile()
     if (!profile) return new NextResponse('Unauthorized', { status: 401 })
 
     const serverId = getServerId(req.url)

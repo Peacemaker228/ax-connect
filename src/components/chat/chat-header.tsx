@@ -3,11 +3,12 @@ import { Hash } from 'lucide-react'
 import { MobileToggle } from '@/components/mobile-toggle'
 import { UserAvatar } from '@/components/user-avatar'
 import { SocketIndicator } from '@/components/socket-indicator'
+import { TChannelConversation } from '@/types'
 
 interface IChatHeaderProps {
   serverId: string
   name: string
-  type: 'channel' | 'conversation'
+  type: TChannelConversation
   imageUrl?: string
 }
 

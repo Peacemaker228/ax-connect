@@ -3,10 +3,8 @@ import './globals.css'
 import React, { ReactNode } from 'react'
 import { Open_Sans } from 'next/font/google'
 import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'
-import { ThemeProvider } from '@/components/providers/theme-providers'
+import { ThemeProvider, ModalProvider, SocketProvider, QueryProvider } from '@/components/providers'
 import { cn } from '@/lib/utils'
-import { ModalProvider } from '@/components/providers/modal-provider'
-import { SocketProvider } from '@/components/providers/socket-provider'
 
 const font = Open_Sans({ subsets: ['latin'] })
 
@@ -46,8 +44,10 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
             {/*  <UserButton />*/}
             {/*</SignedIn>*/}
             <SocketProvider>
-              <ModalProvider />
-              {children}
+              <QueryProvider>
+                <ModalProvider />
+                {children}
+              </QueryProvider>
             </SocketProvider>
           </ThemeProvider>
         </body>

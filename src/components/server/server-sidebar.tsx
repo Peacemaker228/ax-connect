@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { currentsProfile } from '@/lib/currents-profile'
+import { currentProfile } from '@/lib/current-profile'
 import { redirect } from 'next/navigation'
 import { ERoutes } from '@/lib/routes'
 import { db } from '@/lib/db'
@@ -28,7 +28,7 @@ const iconMap = {
 }
 
 export const ServerSidebar: FC<IServerSidebarProps> = async ({ serverId }) => {
-  const profile = await currentsProfile()
+  const profile = await currentProfile()
 
   if (!profile) {
     redirect(ERoutes.MAIN_PAGE)

@@ -1,6 +1,6 @@
 import { NextApiRequest } from 'next'
 import { NextApiResponseServerIo } from '@/types'
-import { currentsProfilePages } from '@/lib/currents-profile-pages'
+import { currentProfilePages } from '@/lib/current-profile-pages'
 import { db } from '@/lib/db'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponseServerIo) {
@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponseS
   }
 
   try {
-    const profile = await currentsProfilePages(req)
+    const profile = await currentProfilePages(req)
     const { content, fileUrl } = req.body
     const { serverId, channelId } = req.query
 

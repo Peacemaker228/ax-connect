@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
-import { currentsProfile } from '@/lib/currents-profile'
+import { currentProfile } from '@/lib/current-profile'
 import { ERoutes } from '@/lib/routes'
 import { redirect } from 'next/navigation'
 import { db } from '@/lib/db'
-import { ChatHeader, ChatInput } from '@/components/chat'
+import { ChatHeader, ChatInput, ChatMessages } from '@/components/chat'
 
 interface IChannelIdPageProps {
   params: {
@@ -13,7 +13,7 @@ interface IChannelIdPageProps {
 }
 
 const ChannelIdPage: FC<IChannelIdPageProps> = async ({ params }) => {
-  const profile = await currentsProfile()
+  const profile = await currentProfile()
 
   if (!profile) {
     return redirect(ERoutes.SIGN_IN)
@@ -41,7 +41,20 @@ const ChannelIdPage: FC<IChannelIdPageProps> = async ({ params }) => {
   return (
     <div className="bg-white dark:bg-[#313338] flex flex-col h-full">
       <ChatHeader name={channel.name} serverId={channel.serverId} type={'channel'} />
-      <div className={'flex-1'}>Future M</div>
+      <ChatMessages
+        member={member}
+        name={channel.name}
+        chatId={channel.id}
+        type={'channel'}
+        apiUrl={'/api/messages'}
+        paramKey={'channelId'}
+        paramValue={channel.id}
+        socketUrl={'/api/socket/messages'}
+        socketQuery={{
+          channelId: channel.id,
+          serverId: channel.serverId,
+        }}
+      />
       <ChatInput
         apiUrl={'/api/socket/messages'}
         type={'channel'}

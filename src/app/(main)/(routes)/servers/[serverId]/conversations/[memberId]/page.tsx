@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { currentsProfile } from '@/lib/currents-profile'
+import { currentProfile } from '@/lib/current-profile'
 import { ERoutes } from '@/lib/routes'
 import { redirect } from 'next/navigation'
 import { db } from '@/lib/db'
@@ -14,7 +14,7 @@ interface IMemberIdPageProps {
 }
 
 const MemberIdPage: FC<IMemberIdPageProps> = async ({ params }) => {
-  const profile = await currentsProfile()
+  const profile = await currentProfile()
 
   if (!profile) {
     return redirect(ERoutes.SIGN_IN)

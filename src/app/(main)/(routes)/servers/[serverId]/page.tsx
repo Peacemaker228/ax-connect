@@ -3,14 +3,14 @@ import { redirect } from 'next/navigation'
 import { ERoutes } from '@/lib/routes'
 import { db } from '@/lib/db'
 import { EGeneral } from '@/types'
-import { currentsProfile } from '@/lib/currents-profile'
+import { currentProfile } from '@/lib/current-profile'
 
 interface IServerIdPageProps {
   params: { serverId: string }
 }
 
 const ServerIdPage: FC<IServerIdPageProps> = async ({ params }) => {
-  const profile = await currentsProfile()
+  const profile = await currentProfile()
 
   if (!profile) {
     return redirect(ERoutes.SIGN_IN)

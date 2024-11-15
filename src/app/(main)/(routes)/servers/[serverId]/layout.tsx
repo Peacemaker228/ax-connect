@@ -1,5 +1,5 @@
 import React, { FC, PropsWithChildren } from 'react'
-import { currentsProfile } from '@/lib/currents-profile'
+import { currentProfile } from '@/lib/current-profile'
 import { db } from '@/lib/db'
 import { redirect } from 'next/navigation'
 import { ERoutes } from '@/lib/routes'
@@ -11,7 +11,7 @@ interface IServerIdLayoutProps {
 
 const ServerIdLayout: FC<PropsWithChildren<IServerIdLayoutProps>> = async ({ children, params }) => {
   const { serverId } = await params
-  const profile = await currentsProfile()
+  const profile = await currentProfile()
 
   if (!profile) {
     return redirect(ERoutes.SIGN_IN)

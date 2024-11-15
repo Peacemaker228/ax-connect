@@ -20,3 +20,5 @@ export type NextApiResponseServerIo = NextApiResponse & {
     }
   }
 }
+
+export type TChannelConversation = 'channel' | 'conversation'

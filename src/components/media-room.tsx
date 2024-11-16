@@ -17,9 +17,9 @@ export const MediaRoom: FC<IMediaRoomProps> = ({ audio, video, chatId }) => {
   const [token, setToken] = useState('')
 
   useEffect(() => {
-    if (!user?.firstName || !user.lastName) return
+    if (!user?.username && (!user?.firstName || !user.lastName)) return
 
-    const name = `${user.firstName} ${user.lastName}`
+    const name = user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : user.username
 
     ;(async () => {
       try {
@@ -30,7 +30,7 @@ export const MediaRoom: FC<IMediaRoomProps> = ({ audio, video, chatId }) => {
         console.log(error)
       }
     })()
-  }, [chatId, user?.firstName, user?.lastName])
+  }, [chatId, user?.firstName, user?.lastName, user?.username])
 
   if (token === '') {
     return (

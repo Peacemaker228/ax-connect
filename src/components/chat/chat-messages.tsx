@@ -1,7 +1,7 @@
 'use client'
 
 import { Member, Message, Profile } from '@prisma/client'
-import { FC, Fragment } from 'react'
+import { ElementRef, FC, Fragment, useRef } from 'react'
 import { TChannelConversation } from '@/types'
 import { useChatQuery } from '@/hooks/use-chat-query'
 import { Loader2, ServerCrash } from 'lucide-react'
@@ -9,6 +9,7 @@ import { ChatItem, ChatWelcome } from '@/components/chat'
 import { format } from 'date-fns'
 import { EDateFormat } from '@/lib/dateFormat'
 import { useChatSocket } from '@/hooks/use-chat-socket'
+import { useChatScroll } from '@/hooks/use-chat-scroll'
 
 type MessageWithMemberWithProfile = Message & {
   member: Member & {
@@ -43,6 +44,9 @@ export const ChatMessages: FC<IChatMessagesProps> = ({
   const addKey = `chat:${chatId}:messages`
   const updateKey = `chat:${chatId}:messages:update`
 
+  const chatRef = useRef<ElementRef<'div'>>(null)
+  const bottomRef = useRef<ElementRef<'div'>>(null)
+
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useChatQuery({
     queryKey,
     apiUrl,
@@ -50,6 +54,13 @@ export const ChatMessages: FC<IChatMessagesProps> = ({
     paramValue,
   })
   useChatSocket({ queryKey, addKey, updateKey })
+  useChatScroll({
+    chatRef,
+    bottomRef,
+    loadMore: fetchNextPage,
+    shouldLoadMore: !isFetchingNextPage && hasNextPage,
+    count: data?.pages?.[0]?.items?.length ?? 0,
+  })
 
   if (status === 'pending') {
     return (
@@ -70,9 +81,24 @@ export const ChatMessages: FC<IChatMessagesProps> = ({
   }
 
   return (
-    <div className="flex-1 flex flex-col py-4 overflow-y-auto">
-      <div className="flex-1" />
-      <ChatWelcome name={name} type={'channel'} />
+    <div ref={chatRef} className="flex-1 flex flex-col py-4 overflow-y-auto">
+      {!hasNextPage && <div className="flex-1" />}
+      {!hasNextPage && <ChatWelcome name={name} type={'channel'} />}
+      {hasNextPage && (
+        <div className="flex justify-center">
+          {isFetchingNextPage ? (
+            <Loader2 className="h-6 w-6 text-zinc-500 animate-spin my-4" />
+          ) : (
+            <button
+              onClick={() => fetchNextPage()}
+              className={
+                'text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition text-xs my-4'
+              }>
+              Загрузить предыдущие сообщения
+            </button>
+          )}
+        </div>
+      )}
       <div className={'flex flex-col-reverse mt-auto'}>
         {data?.pages?.map((page, i) => (
           <Fragment key={i}>
@@ -94,6 +120,7 @@ export const ChatMessages: FC<IChatMessagesProps> = ({
           </Fragment>
         ))}
       </div>
+      <div ref={bottomRef} />
     </div>
   )
 }

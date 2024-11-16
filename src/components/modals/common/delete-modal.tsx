@@ -14,8 +14,8 @@ interface IDeleteModalProps {
   onClose: () => void
   isLoading: boolean
   onSubmit: () => Promise<void>
-  name: string | undefined
-  type: 'channel' | 'server'
+  name?: string
+  type: 'channel' | 'server' | 'message'
 }
 
 export const DeleteModal: FC<IDeleteModalProps> = ({ isOpen, onClose, isLoading, onSubmit, name, type }) => {
@@ -23,17 +23,23 @@ export const DeleteModal: FC<IDeleteModalProps> = ({ isOpen, onClose, isLoading,
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
-          <DialogTitle className="text-2xl text-center">Delete {type === 'channel' ? 'Channel' : 'Server'}</DialogTitle>
+          <DialogTitle className="text-2xl text-center">
+            Удалить {type.charAt(0).toUpperCase() + type.slice(1)}
+          </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
-            Are you sure you want to do this? <br />
-            <span className="font-semibold text-indigo-500">{type === 'channel' ? `#${name}` : name}</span> will be
-            permanently deleted
+            Вы уверены, что хотите сделать это? <br />
+            {type !== 'message' ? (
+              <span className="font-semibold text-indigo-500">{type === 'channel' ? `#${name}` : name}</span>
+            ) : (
+              'Сообщение'
+            )}{' '}
+            будет удалено навсегда
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="bg-gray-100 px-6 py-4">
           <div className="flex items-center justify-between w-full">
             <Button disabled={isLoading} onClick={onClose} variant="ghost">
-              Cancel
+              Отменить
             </Button>
             <Button
               disabled={isLoading}
@@ -41,7 +47,7 @@ export const DeleteModal: FC<IDeleteModalProps> = ({ isOpen, onClose, isLoading,
               onClick={() => {
                 return onSubmit()
               }}>
-              Confirm
+              Подтвердить
             </Button>
           </div>
         </DialogFooter>

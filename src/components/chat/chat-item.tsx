@@ -17,6 +17,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import qs from 'query-string'
 import axios from 'axios'
+import { useModal } from '@/hooks/use-modal-store'
 
 interface IChatItemProps {
   id: string
@@ -46,7 +47,7 @@ export const ChatItem: FC<IChatItemProps> = ({
   id,
 }) => {
   const [isEditing, setIsEditing] = useState(false)
-  const [isDeleting, setIsDeleting] = useState(false)
+  const { onOpen } = useModal()
 
   const form = useForm<IChatInputSchema>({
     resolver: zodResolver(chatInputSchema),
@@ -206,7 +207,9 @@ export const ChatItem: FC<IChatItemProps> = ({
           )}
           <ActionTooltip label={'Удалить'}>
             <Trash
-              onClick={() => setIsEditing(true)}
+              onClick={() => {
+                onOpen('deleteMessage', { apiUrl: `${socketUrl}/${id}`, query: socketQuery })
+              }}
               className={
                 'cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition'
               }

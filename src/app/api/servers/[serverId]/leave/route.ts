@@ -10,8 +10,6 @@ export const PATCH = async (req: Request, { params }: { params: Promise<{ server
       return new NextResponse('Unauthorized', { status: 401 })
     }
 
-    console.log(profile, 'profile')
-
     const { serverId } = await params
 
     if (!serverId) {

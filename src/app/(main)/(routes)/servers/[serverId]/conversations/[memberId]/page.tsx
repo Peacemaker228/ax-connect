@@ -12,9 +12,9 @@ interface IMemberIdPageProps {
     memberId: string
     serverId: string
   }>
-  searchParams: {
+  searchParams: Promise<{
     video?: boolean
-  }
+  }>
 }
 
 const MemberIdPage: FC<IMemberIdPageProps> = async ({ params, searchParams }) => {
@@ -25,6 +25,7 @@ const MemberIdPage: FC<IMemberIdPageProps> = async ({ params, searchParams }) =>
   }
 
   const { memberId, serverId } = await params
+  const { video } = await searchParams
 
   if (!memberId || !serverId) {
     return redirect(ERoutes.MAIN_PAGE)
@@ -62,8 +63,8 @@ const MemberIdPage: FC<IMemberIdPageProps> = async ({ params, searchParams }) =>
         serverId={serverId}
         type={'conversation'}
       />
-      {searchParams.video && <MediaRoom chatId={conversation.id} video={true} audio={true} />}
-      {!searchParams.video && (
+      {video && <MediaRoom chatId={conversation.id} video={true} audio={true} />}
+      {!video && (
         <>
           <ChatMessages
             name={otherMember.profile.name}

@@ -4,7 +4,8 @@ import { createContext, PropsWithChildren, useContext, useEffect, useState } fro
 import { io as ClientIO } from 'socket.io-client'
 
 type SocketContextType = {
-  socket: never | null
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  socket: any | null
   isConnected: boolean
 }
 

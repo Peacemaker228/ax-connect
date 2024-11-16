@@ -7,10 +7,10 @@ import { ChatHeader, ChatInput, ChatMessages } from '@/components/chat'
 import { MediaRoom } from '@/components/media-room'
 
 interface IChannelIdPageProps {
-  params: {
+  params: Promise<{
     serverId: string
     channelId: string
-  }
+  }>
 }
 
 const ChannelIdPage: FC<IChannelIdPageProps> = async ({ params }) => {

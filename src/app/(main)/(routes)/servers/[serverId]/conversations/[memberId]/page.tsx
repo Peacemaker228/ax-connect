@@ -8,10 +8,10 @@ import { ChatHeader, ChatInput, ChatMessages } from '@/components/chat'
 import { MediaRoom } from '@/components/media-room'
 
 interface IMemberIdPageProps {
-  params: {
+  params: Promise<{
     memberId: string
     serverId: string
-  }
+  }>
   searchParams: {
     video?: boolean
   }

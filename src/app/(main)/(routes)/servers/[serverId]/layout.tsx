@@ -6,7 +6,7 @@ import { ERoutes } from '@/lib/routes'
 import { ServerSidebar } from '@/components/server'
 
 interface IServerIdLayoutProps {
-  params: { serverId: string }
+  params: Promise<{ serverId: string }>
 }
 
 const ServerIdLayout: FC<PropsWithChildren<IServerIdLayoutProps>> = async ({ children, params }) => {

@@ -6,7 +6,7 @@ import { EGeneral } from '@/types'
 import { currentProfile } from '@/lib/current-profile'
 
 interface IServerIdPageProps {
-  params: { serverId: string }
+  params: Promise<{ serverId: string }>
 }
 
 const ServerIdPage: FC<IServerIdPageProps> = async ({ params }) => {

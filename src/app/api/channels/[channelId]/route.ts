@@ -4,7 +4,7 @@ import { db } from '@/lib/db'
 import { EGeneral } from '@/types'
 import { MemberRole } from '@prisma/client'
 
-export const PATCH = async (req: Request, { params }: { params: { channelId: string } }) => {
+export const PATCH = async (req: Request, { params }: { params: Promise<{ channelId: string }> }) => {
   try {
     const profile = await currentProfile()
 

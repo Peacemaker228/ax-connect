@@ -4,7 +4,7 @@ import { db } from '@/lib/db'
 import { validateMemberId } from './utils'
 import { getServerId } from '@/app/api/utils'
 
-export const deleteMember = async (req: Request, params: { memberId: string }) => {
+export const deleteMember = async (req: Request, params: Promise<{ memberId: string }>) => {
   try {
     const profile = await currentProfile()
     if (!profile) return new NextResponse('Unauthorized', { status: 401 })
@@ -12,7 +12,7 @@ export const deleteMember = async (req: Request, params: { memberId: string }) =
     const serverId = getServerId(req.url)
     if (!serverId) return new NextResponse('Server ID Missing', { status: 400 })
 
-    const memberId = validateMemberId(params)
+    const memberId = await validateMemberId(params)
     if (!memberId) return new NextResponse('Member ID Missing', { status: 400 })
 
     const server = await db.server.update({

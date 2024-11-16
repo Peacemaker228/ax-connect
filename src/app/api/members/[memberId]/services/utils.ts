@@ -1,5 +1,7 @@
 import { IMemberParams } from '@/app/api/members/[memberId]/route'
 
-export const validateMemberId = (params: Partial<IMemberParams['params']>): string | null => {
-  return params.memberId ?? null
+export const validateMemberId = async (params: IMemberParams['params']): Promise<string | null> => {
+  const { memberId } = await params
+
+  return memberId ?? null
 }

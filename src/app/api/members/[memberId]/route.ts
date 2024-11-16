@@ -2,9 +2,9 @@ import { deleteMember } from './services/deleteMember'
 import { patchMember } from './services/patchMember'
 
 export interface IMemberParams {
-  params: {
+  params: Promise<{
     memberId: string
-  }
+  }>
 }
 
 export const DELETE = (req: Request, context: IMemberParams) => deleteMember(req, context.params)

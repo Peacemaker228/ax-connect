@@ -4,7 +4,7 @@ import { db } from '@/lib/db'
 import { validateMemberId } from './utils'
 import { getServerId } from '@/app/api/utils'
 
-export const patchMember = async (req: Request, params: { memberId: string }) => {
+export const patchMember = async (req: Request, params: Promise<{ memberId: string }>) => {
   try {
     const profile = await currentProfile()
     if (!profile) return new NextResponse('Unauthorized', { status: 401 })
@@ -13,7 +13,7 @@ export const patchMember = async (req: Request, params: { memberId: string }) =>
     if (!serverId) return new NextResponse('Server ID Missing', { status: 400 })
 
     const { role } = await req.json()
-    const memberId = validateMemberId(params)
+    const memberId = await validateMemberId(params)
     if (!memberId) return new NextResponse('Member ID Missing', { status: 400 })
 
     const server = await db.server.update({

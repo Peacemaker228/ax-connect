@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { currentProfile } from '@/lib/current-profile'
 import { db } from '@/lib/db'
 
-export const PATCH = async (req: Request, { params }: { params: { serverId: string } }) => {
+export const PATCH = async (req: Request, { params }: { params: Promise<{ serverId: string }> }) => {
   try {
     const profile = await currentProfile()
 

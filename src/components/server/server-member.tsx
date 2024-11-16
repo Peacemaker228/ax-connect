@@ -17,7 +17,7 @@ export const ServerMember: FC<IServerMemberProps> = ({ server, member }) => {
   const params = useParams()
   const router = useRouter()
 
-  const icon = roleIconMap[member.role]
+  const icon = roleIconMap()[member.role]
 
   const handleClick = () => {
     router.push(`${ERoutes.SERVERS}/${params?.serverId}${ERoutes.CONVERSATIONS}/${member.id}`)

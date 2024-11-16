@@ -1,3 +1,5 @@
+'use server'
+
 import { FC } from 'react'
 import { currentProfile } from '@/lib/current-profile'
 import { redirect } from 'next/navigation'
@@ -86,7 +88,7 @@ export const ServerSidebar: FC<IServerSidebarProps> = async ({ serverId }) => {
     {
       label: 'Members',
       type: 'member',
-      data: members.map(({ id, profile, role }) => ({ id, name: profile?.name, icon: roleIconMap[role] })),
+      data: members.map(({ id, profile, role }) => ({ id, name: profile?.name, icon: roleIconMap()[role] })),
     },
   ]
 

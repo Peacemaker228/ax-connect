@@ -5,9 +5,9 @@ import { ERoutes } from '@/lib/routes'
 import { db } from '@/lib/db'
 
 interface IInvitePageProps {
-  params: {
+  params: Promise<{
     inviteCode: string
-  }
+  }>
 }
 
 const InvitePage: FC<IInvitePageProps> = async ({ params }) => {

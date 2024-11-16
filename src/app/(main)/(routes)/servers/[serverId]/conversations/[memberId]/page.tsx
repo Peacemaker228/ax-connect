@@ -4,7 +4,7 @@ import { ERoutes } from '@/lib/routes'
 import { redirect } from 'next/navigation'
 import { db } from '@/lib/db'
 import { getOrCreateConversation } from '@/lib/conversation'
-import { ChatHeader } from '@/components/chat'
+import { ChatHeader, ChatInput, ChatMessages } from '@/components/chat'
 
 interface IMemberIdPageProps {
   params: {
@@ -56,6 +56,27 @@ const MemberIdPage: FC<IMemberIdPageProps> = async ({ params }) => {
         imageUrl={otherMember.profile.imageUrl}
         name={otherMember.profile.name}
         serverId={serverId}
+        type={'conversation'}
+      />
+      <ChatMessages
+        name={otherMember.profile.name}
+        member={currentMember}
+        chatId={conversation.id}
+        apiUrl={`/api/direct-messages`}
+        socketUrl={'/api/socket/direct-messages'}
+        socketQuery={{
+          conversationId: conversation.id,
+        }}
+        paramKey={'conversationId'}
+        paramValue={conversation.id}
+        type={'conversation'}
+      />
+      <ChatInput
+        apiUrl={'/api/socket/direct-messages'}
+        query={{
+          conversationId: conversation.id,
+        }}
+        name={otherMember.profile.name}
         type={'conversation'}
       />
     </div>

@@ -3,7 +3,7 @@ import { currentProfile } from '@/lib/current-profile'
 import { db } from '@/lib/db'
 import { v4 as uuidV4 } from 'uuid'
 
-export const PATCH = async (req: Request, { params }: { params: { serverId: string } }) => {
+export const PATCH = async (req: Request, { params }: { params: Promise<{ serverId: string }> }) => {
   try {
     const profile = await currentProfile()
 
@@ -11,13 +11,15 @@ export const PATCH = async (req: Request, { params }: { params: { serverId: stri
       return new NextResponse('Unauthorized', { status: 401 })
     }
 
-    if (!params.serverId) {
+    const { serverId } = await params
+
+    if (!serverId) {
       return new NextResponse('Server ID Missing', { status: 400 })
     }
 
     const server = await db.server.update({
       where: {
-        id: params.serverId,
+        id: serverId,
         profileId: profile.id,
       },
       data: {

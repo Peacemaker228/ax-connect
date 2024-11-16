@@ -1,6 +1,8 @@
-import {PrismaClient} from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 
 declare global {
+  // `var` необходим для добавления свойства в глобальный объект (globalThis)
+  /* eslint-disable-next-line no-var */
   var prisma: PrismaClient | undefined
 }
 

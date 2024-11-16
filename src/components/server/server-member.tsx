@@ -13,7 +13,7 @@ interface IServerMemberProps {
   server: Server
 }
 
-export const ServerMember: FC<IServerMemberProps> = ({ server, member }) => {
+export const ServerMember: FC<IServerMemberProps> = ({ member }) => {
   const params = useParams()
   const router = useRouter()
 

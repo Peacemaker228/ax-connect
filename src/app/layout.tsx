@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import React, { ReactNode } from 'react'
 import { Open_Sans } from 'next/font/google'
-import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'
+import { ClerkProvider } from '@clerk/nextjs'
 import { ThemeProvider, ModalProvider, SocketProvider, QueryProvider } from '@/components/providers'
 import { cn } from '@/lib/utils'
 

@@ -19,7 +19,7 @@ export const FileUpload: FC<IFileUploadProps> = ({ endpoint, value, onChangeActi
 
   const handleUploadComplete = (res: ClientUploadedFileData<null>[]) => {
     if (res && res[0]) {
-      onChangeAction(res[0].url)
+      onChangeAction(`${res[0].url}/${res[0].type}`)
       setFileType(res[0].type)
     }
   }

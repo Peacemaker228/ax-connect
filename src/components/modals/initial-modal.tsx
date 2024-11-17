@@ -34,5 +34,5 @@ export const InitialModal = () => {
     }
   }
 
-  return <ServerModal form={form} onSubmitAction={handleSubmit} isLoading={isLoading} />
+  return <ServerModal form={form} onSubmitAction={handleSubmit} isLoading={isLoading} isModalOpen />
 }
